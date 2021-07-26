@@ -114,7 +114,7 @@ long LinuxParser::ActiveJiffies(int pid) {
   string line, value;
   long utime, stime, cutime, cstime, total_time;
   
-  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename); //Create a steam for reading Process data
+  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename); //Create a steam for reading Process data
   if (stream.is_open()) { //Open file
     std::getline(stream, line); //Read line
     std::istringstream linestream(line); //convert line to line stream
@@ -274,7 +274,7 @@ long LinuxParser::UpTime(int pid) {
   string line, value;
   long upTime;
   
-  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename); //Create a steam for reading Process data
+  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename); //Create a steam for reading Process data
   if (stream.is_open()) { //Open file
     std::getline(stream, line); //Read line
     std::istringstream linestream(line); //convert line to line stream

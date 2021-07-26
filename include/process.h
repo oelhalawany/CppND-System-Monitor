@@ -26,6 +26,7 @@ class Process {
   std::string _ram;
   std::string _usr;
   long _uptime;
+  long _seconds, _total_time;
 };
 
 #endif
