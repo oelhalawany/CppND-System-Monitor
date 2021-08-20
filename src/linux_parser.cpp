@@ -224,7 +224,7 @@ string LinuxParser::Ram(int pid) {
   		std::istringstream linestream(line);
     	while (linestream >> key >> value >> kB) {
         	if (key == "VmSize:") {
-            	return value;
+            	return std::to_string(std::stod(value)/1024); // Value returned is converted to Mb
               }
         	}
       	}
@@ -283,7 +283,7 @@ long LinuxParser::UpTime(int pid) {
         }
     }
   
-  upTime = std::stol(data[21]) / sysconf(_SC_CLK_TCK); // Convert from CLK ticket to Seconds
+  upTime = LinuxParser::UpTime() - (std::stol(data[21]) / sysconf(_SC_CLK_TCK)); // Convert from CLK ticket to Seconds
   return upTime;
   
 }
