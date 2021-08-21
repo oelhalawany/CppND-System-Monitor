@@ -25,11 +25,11 @@ float Process::CpuUtilization() {
   _total_time = LinuxParser::ActiveJiffies(_pid)/sysconf(_SC_CLK_TCK); 
   _seconds = LinuxParser::UpTime(_pid);
   if(_seconds>0){
-        return _total_time/_seconds;
+      return _total_time/_seconds;
   }
   else
   {
-    return 0;
+     return 0;
   }
   
 }

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include <iostream>
 
 using std::stof;
 using std::string;
@@ -25,17 +26,15 @@ float Processor::Utilization() {
   _guest =       stoi(Jiffies[guest]);
   _guest_nice =  stoi(Jiffies[guest_nice]);
   
-  unsigned long long int usertime = _user - _guest;                             
-  unsigned long long int nicetime = _nice - _guest_nice;  
+  float usertime = _user - _guest;                             
+  float nicetime = _nice - _guest_nice;  
   
-  unsigned long long int idlealltime = _idle + _iowait;
-  unsigned long long int systemalltime = _system + _irq + _softirq;
-  unsigned long long int virtalltime = _guest + _guest;
-  unsigned long long int totaltime = _user + _nice + systemalltime + idlealltime + steal + virtalltime;
+  float idlealltime = _idle + _iowait;
+  float systemalltime = _system + _irq + _softirq;
+  float virtalltime = _guest + _guest;
+  float totaltime = _user + _nice + systemalltime + idlealltime + steal + virtalltime;
 
   Util = (totaltime - idlealltime) / totaltime;
-  
-  
   
   return Util;
   

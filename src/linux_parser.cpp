@@ -98,10 +98,8 @@ long LinuxParser::UpTime() {
   std::ifstream stream(kProcDirectory + kUptimeFilename);
   if (stream.is_open()) {
     std::getline(stream, line);
-    //std::cout<<"line read= "<<line <<std::endl;
   	std::istringstream linestream(line);
-    linestream >> uptime /*>> idletime*/;
-    //std::cout<<"uptime= "<<uptime <<std::endl;
+    linestream >> uptime;
     uptime_long = std::stol(uptime);
     }
   return uptime_long;
