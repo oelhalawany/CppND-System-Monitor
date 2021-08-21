@@ -35,4 +35,8 @@ float Processor::Utilization() {
 
   Util = (totaltime - idlealltime) / totaltime;
   
+  
+  
+  return Util;
+  
 }

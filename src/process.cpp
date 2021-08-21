@@ -13,14 +13,8 @@ using std::vector;
 
 //Constructor
 Process::Process(int pid) {
- // std::cout<<"process constructor called!"<<std::endl;
   _pid = pid;
- // std::cout<<"pid = "  <<pid <<std::endl;
   _cpu_util = Process::CpuUtilization();
-  //_cmd = LinuxParser::Command(_pid);
-  //_ram = LinuxParser::Ram(_pid);
-  //_usr = LinuxParser::User(_pid);
-  //_uptime = LinuxParser::UpTime(_pid);
 }
 
 // TODO: Return this process's ID
@@ -28,12 +22,16 @@ int Process::Pid() { return _pid; }
 
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() { 
- // std::cout<<"CpuUtil ... pid = "  <<_pid <<std::endl;
   _total_time = LinuxParser::ActiveJiffies(_pid)/sysconf(_SC_CLK_TCK); 
- // std::cout<<"reached!"<<std::endl;
   _seconds = LinuxParser::UpTime(_pid);
- // std::cout<<"reached!"<<std::endl;
-  return _total_time/_seconds;
+  if(_seconds>0){
+        return _total_time/_seconds;
+  }
+  else
+  {
+    return 0;
+  }
+  
 }
 
 // TODO: Return the command that generated this process
