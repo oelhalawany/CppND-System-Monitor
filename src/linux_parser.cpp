@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "linux_parser.h"
 #include <iostream>
+#include <stdexcept>
 
 using std::stof;
 using std::string;
@@ -93,15 +94,17 @@ float LinuxParser::MemoryUtilization() {
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() {
   string uptime, idletime, line;
+  long uptime_long = 0;
   std::ifstream stream(kProcDirectory + kUptimeFilename);
   if (stream.is_open()) {
     std::getline(stream, line);
-    std::cout<<"line read= "<<line <<std::endl;
+    //std::cout<<"line read= "<<line <<std::endl;
   	std::istringstream linestream(line);
     linestream >> uptime >> idletime;
-    std::cout<<"uptime= "<<uptime <<std::endl;
+    //std::cout<<"uptime= "<<uptime <<std::endl;
+    uptime_long = std::stol(uptime);
     }
-  return std::stol(uptime);
+  return uptime_long;
 }
 
 // TODO: Read and return the number of jiffies for the system
@@ -283,7 +286,12 @@ long LinuxParser::UpTime(int pid) {
         }
     }
   
-  upTime = LinuxParser::UpTime() - (std::stol(data[21]) / sysconf(_SC_CLK_TCK)); // Convert from CLK ticket to Seconds
-  return upTime;
+    try{
+      upTime = LinuxParser::UpTime() - std::stol(data[21]) / sysconf(_SC_CLK_TCK); // Convert from CLK ticket to Seconds
+    }
+    catch (std::runtime_error& e) {
+          std::cout << "Exception occurred" << std::endl << e.what();
+    }
   
+   return upTime;
 }

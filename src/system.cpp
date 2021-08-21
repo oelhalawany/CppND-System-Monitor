@@ -21,6 +21,8 @@ vector<Process>& System::Processes() {
   
   auto Processes_Ids = LinuxParser::Pids();
   
+    processes_.clear();
+  
     for (int pid : Processes_Ids){
     	Process process(pid);
    		processes_.push_back(process);
