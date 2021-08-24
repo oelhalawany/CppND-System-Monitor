@@ -26,9 +26,6 @@ float Processor::Utilization() {
   _guest =       stoi(Jiffies[guest]);
   _guest_nice =  stoi(Jiffies[guest_nice]);
   
-  float usertime = _user - _guest;                             
-  float nicetime = _nice - _guest_nice;  
-  
   float idlealltime = _idle + _iowait;
   float systemalltime = _system + _irq + _softirq;
   float virtalltime = _guest + _guest;

@@ -11,7 +11,6 @@ using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
-using std::cout;
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -100,6 +99,7 @@ long LinuxParser::UpTime() {
     std::getline(stream, line);
   	std::istringstream linestream(line);
     linestream >> uptime;
+
     uptime_long = std::stol(uptime);
     }
   return uptime_long;
@@ -224,6 +224,7 @@ string LinuxParser::Command(int pid) {
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid) {
   string line, key, value, kB;
+  int val;
   value = "NA"; //initilization value if not found
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename);
   if (stream.is_open()) {
@@ -231,7 +232,8 @@ string LinuxParser::Ram(int pid) {
   		std::istringstream linestream(line);
     	while (linestream >> key >> value >> kB) {
         	if (key == "VmSize:") {
-            	return std::to_string(std::stod(value)/1024); // Value returned is converted to Mb
+                val = std::stoi(value)/1024;
+            	  return std::to_string(val); // Value returned is converted to Mb
               }
         	}
       	}
